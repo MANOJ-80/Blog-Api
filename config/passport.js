@@ -26,5 +26,6 @@ module.exports = (passport) => {
         return done(err, false);
       }
     })
-  );
+  );         
 };
+                    

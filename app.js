@@ -12,7 +12,11 @@ app.use(cors());
 require('./config/passport')(passport);
 
 app.use('/api',authRouter );
+app.use('/api/posts', require('./routes/postRoute'));
+
+/* app.use('/api/users', require('./routes/userRoute'));
+app.use('/api/comments', require('./routes/commentRoute')); */
 app.listen(3000, () => {
   console.log('Server is running on port 3000');
 }
-);
+);       

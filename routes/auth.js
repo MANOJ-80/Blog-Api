@@ -7,6 +7,7 @@ require('dotenv').config();
 const router = express.Router();
 
 const { PrismaClient } = require('@prisma/client');
+const { isAuthenticated } = require('../controllers/authController');
 const db = new PrismaClient();
 router.post('/register', async (req, res) => {
   const { username, password } = req.body;
@@ -60,15 +61,22 @@ router.post('/login', async (req, res) => {
     console.error(err);
     res.status(500).send('Server error');
   }
-});
+});    
 
-// Protected routected
+// test route
 router.get(
   '/protected',
-  passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false }),         
   (req, res) => {
     res.json({ msg: 'You are authorized', user: req.user });
   }
 );
+
+
+router.get('/current', isAuthenticated, (req, res) => {
+  res.json({ msg: "Authenticated"})
+})
+
+
 
 module.exports = router;
